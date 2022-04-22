@@ -31,3 +31,13 @@ npm run dev
 ```
 
 **NOTE**: frontend will still work without a backend, it will revert to using the static data in the code (for now).
+
+## Screenshots
+
+### Original
+
+![Original](https://github.com/delfzzz/startpage-clone/raw/master/screenshots/Buffer%20-%20Start%20Page.png)
+
+### Clone
+
+![Clone](https://github.com/delfzzz/startpage-clone/raw/master/screenshots/Start%20Page%20Clone.png)
