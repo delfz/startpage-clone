@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import { LayoutBlock, useStartPage } from '../../../StartPageContext';
 import ButtonLinkForm from '../form/ButtonLinkForm';
 import ImageLinkForm from '../form/ImageLinkForm';
@@ -20,15 +20,15 @@ const AddBlock: FC = () => {
     'text',
   ];
 
-  const handleAddBlockClick = (blockType: string) => {
+  const handleAddBlockClick = useCallback((blockType: string) => {
     setIsInCreateMode(true);
     setBlockTypeToAdd(blockType);
-  };
+  }, []);
 
-  const formBackClick = () => {
+  const formBackClick = useCallback(() => {
     setIsInCreateMode(false);
     setBlockTypeToAdd('');
-  };
+  }, []);
 
   const [startPagelayout, StartPageService] = useStartPage();
 

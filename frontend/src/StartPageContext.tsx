@@ -1,12 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import update from 'immutability-helper';
-import {
-  ApolloClient,
-  gql,
-  InMemoryCache,
-  useMutation,
-  useQuery,
-} from '@apollo/client';
+import { gql, useMutation, useQuery } from '@apollo/client';
 // import { DEFAULT_LAYOUT } from './data/DefaultData';
 import _ from 'lodash';
 

@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { LayoutBlock, useStartPage } from '../../../StartPageContext';
@@ -18,15 +18,15 @@ const SiteLayout: FC = () => {
   const [blockTypeToEdit, setBlockTypeToEdit] = useState('');
   const [idxToEdit, setIdxToEdit] = useState(-1);
 
-  const formBackClick = () => {
+  const formBackClick = useCallback(() => {
     setIsInEditMode(false);
     setBlockTypeToEdit('');
     setIdxToEdit(-1);
-  };
+  }, []);
 
-  const handleBlockSync = (data: LayoutBlock) => {
+  const handleBlockSync = useCallback((data: LayoutBlock) => {
     StartPageService.syncBlock(data);
-  };
+  }, []);
 
   return isInEditMode ? (
     <div>
