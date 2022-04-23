@@ -276,9 +276,6 @@ export function StartPageProvider({ children }: { children: JSX.Element }) {
   const [gqlMoveBlock, gqlMoveBlockData] = useMutation(GQL_MOVE_BLOCK);
 
   const initStartPage = (initData: any) => {
-    // TODO: know why this is being called after mutation
-    console.log('init');
-
     if (initData) {
       setStartPagelayout(initData.startpage.layout);
       return;
@@ -301,12 +298,26 @@ export function StartPageProvider({ children }: { children: JSX.Element }) {
     return startPagelayout.findIndex((b) => b.id === id) !== -1;
   };
 
+  const serverSyncBLock = (block: LayoutBlock) => {
+    // NOTE: temp 'any'a to remove warning of delete
+    const blockInput: any = _.cloneDeep(block);
+    delete blockInput.meta;
+
+    gqlSyncBlock({
+      variables: {
+        input: { startPageId: START_PAGE_ID, layoutBlockData: blockInput },
+      },
+    });
+  };
+
   const syncBlock = (block: LayoutBlock) => {
     const idx = startPagelayout.findIndex((b) => b.id === block.id);
 
     // add if not in the layout
     if (idx === -1) {
       setStartPagelayout(update(startPagelayout, { $push: [block] }));
+
+      serverSyncBLock(block);
       return;
     }
 
@@ -323,15 +334,7 @@ export function StartPageProvider({ children }: { children: JSX.Element }) {
       })
     );
 
-    // NOTE: temp 'any'a to remove warning of delete
-    const blockInput: any = _.cloneDeep(block);
-    delete blockInput.meta;
-
-    gqlSyncBlock({
-      variables: {
-        input: { startPageId: START_PAGE_ID, layoutBlockData: blockInput },
-      },
-    });
+    serverSyncBLock(block);
   };
 
   const moveBlock = (id: string, atIndex: number) => {
